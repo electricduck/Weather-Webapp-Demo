@@ -1,0 +1,98 @@
+{
+    "version": "0.1.0",
+    "windows": {
+        "command": "cmd",
+        "args": ["/C"],
+        "suppressTaskName": true,
+        "tasks": [
+            {
+                "taskName": "App: Build .NET App",
+                "args": ["dotnet build ${workspaceRoot}/src/Weather-Webapp-Demo/"]
+            },
+            {
+                "taskName": "App: Install Bower Packages",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && bower install"]
+            },
+            {
+                "taskName": "App: Install NuGet Packages",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && dotnet restore"]
+            },
+            {
+                "taskName": "App: Release Package",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && dotnet pack -c Release"]
+            },
+            {
+                "taskName": "App: Run Gulp Tasks",
+                "args": ["node ${workspaceRoot}/src/Weather-Webapp-Demo/node_modules/gulp/bin/gulp.js --cwd ${workspaceRoot}/src/Weather-Webapp-Demo/"]
+            },
+            {
+                "taskName": "App: Run Gulp Watcher",
+                "args": ["node ${workspaceRoot}/src/Weather-Webapp-Demo/node_modules/gulp/bin/gulp.js --cwd ${workspaceRoot}/src/Weather-Webapp-Demo/ watch"]
+            }
+        ]
+    },
+    "linux": {
+        "command": "sh",
+        "args": ["-c"],
+        "suppressTaskName": true,
+        "tasks": [
+            {
+                "taskName": "App: Build .NET App",
+                "args": ["dotnet build ${workspaceRoot}/src/Weather-Webapp-Demo/"]
+            },
+            {
+                "taskName": "App: Install Bower Packages",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && bower install"]
+            },
+            {
+                "taskName": "App: Install NuGet Packages",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && dotnet restore"]
+            },
+            {
+                "taskName": "App: Release Package",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && dotnet pack -c Release"]
+            },
+            {
+                "taskName": "App: Run Gulp Tasks",
+                "args": ["node ${workspaceRoot}/src/Weather-Webapp-Demo/node_modules/gulp/bin/gulp.js --cwd ${workspaceRoot}/src/Weather-Webapp-Demo/"]
+            },
+            {
+                "taskName": "App: Run Gulp Watcher",
+                "args": ["node ${workspaceRoot}/src/Weather-Webapp-Demo/node_modules/gulp/bin/gulp.js --cwd ${workspaceRoot}/src/Weather-Webapp-Demo/ watch"]
+            }
+        ]
+    },
+    "osx": {
+        "command": "sh",
+        "args": ["-c"],
+        "suppressTaskName": true,
+        "tasks": [
+            {
+                "taskName": "App: Build .NET App",
+                "args": ["dotnet build ${workspaceRoot}/src/Weather-Webapp-Demo/"]
+            },
+            {
+                "taskName": "App: Install Bower Packages",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && bower install"]
+            },
+            {
+                "taskName": "App: Install NuGet Packages",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && dotnet restore"]
+            },
+            {
+                "taskName": "App: Release Package",
+                "args": ["cd ${workspaceRoot}/src/Weather-Webapp-Demo/ && dotnet pack -c Release"]
+            },
+            {
+                "taskName": "App: Run Gulp Tasks",
+                "args": ["node ${workspaceRoot}/src/Weather-Webapp-Demo/node_modules/gulp/bin/gulp.js --cwd ${workspaceRoot}/src/Weather-Webapp-Demo/"]
+            },
+            {
+                "taskName": "App: Run Gulp Watcher",
+                "args": ["node ${workspaceRoot}/src/Weather-Webapp-Demo/node_modules/gulp/bin/gulp.js --cwd ${workspaceRoot}/src/Weather-Webapp-Demo/ watch"]
+            }
+        ]
+    },
+    "isShellCommand": true,
+    "showOutput": "always"
+}
