@@ -2,6 +2,7 @@
     var app = new Vue({
         el: '#app',
         data: {
+            errorMessage: null,
             initialView: true,
             isReady: false,
             requestedLocation: null,
@@ -103,43 +104,49 @@
                 var self = this;
 
                 $.get("/api/current/city/" + this.requestedLocation, function(data) {
-                    self.weather.cloudCover = data.clouds.all;
-                    self.weather.desc = data.weather[0].description;
-                    self.weather.humidity = data.main.humidity;
-                    self.weather.icon = self.getWeatherIcon(data.weather[0]);
-                    self.weather.pressure = data.main.pressure;
-                    self.weather.type = data.weather[0].main;
-                    self.weather.update = self.convertUnixTimestampToTime(data.dt);
-                    self.weather.visibility = data.visibility;
+                    if(data.cod === 200) {
+                        self.weather.cloudCover = data.clouds.all;
+                        self.weather.desc = data.weather[0].description;
+                        self.weather.humidity = data.main.humidity;
+                        self.weather.icon = self.getWeatherIcon(data.weather[0]);
+                        self.weather.pressure = data.main.pressure;
+                        self.weather.type = data.weather[0].main;
+                        self.weather.update = self.convertUnixTimestampToTime(data.dt);
+                        self.weather.visibility = data.visibility;
 
-                    self.weather.sun.rise = self.convertUnixTimestampToTime(data.sys.sunrise);
-                    self.weather.sun.set = self.convertUnixTimestampToTime(data.sys.sunset);
+                        self.weather.sun.rise = self.convertUnixTimestampToTime(data.sys.sunrise);
+                        self.weather.sun.set = self.convertUnixTimestampToTime(data.sys.sunset);
 
-                    self.weather.temp.actual.celcius = self.convertKelvinToCelcius(data.main.temp);
-                    self.weather.temp.actual.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp);
-                    self.weather.temp.actual.kelvin = data.main.temp;
+                        self.weather.temp.actual.celcius = self.convertKelvinToCelcius(data.main.temp);
+                        self.weather.temp.actual.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp);
+                        self.weather.temp.actual.kelvin = data.main.temp;
 
-                    self.weather.temp.high.celcius = self.convertKelvinToCelcius(data.main.temp_max);
-                    self.weather.temp.high.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp_min);
-                    self.weather.temp.high.kelvin = data.main.temp_max;
+                        self.weather.temp.high.celcius = self.convertKelvinToCelcius(data.main.temp_max);
+                        self.weather.temp.high.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp_min);
+                        self.weather.temp.high.kelvin = data.main.temp_max;
 
-                    self.weather.temp.low.celcius = self.convertKelvinToCelcius(data.main.temp_min);
-                    self.weather.temp.low.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp_min);
-                    self.weather.temp.low.kelvin = data.main.temp_min;
+                        self.weather.temp.low.celcius = self.convertKelvinToCelcius(data.main.temp_min);
+                        self.weather.temp.low.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp_min);
+                        self.weather.temp.low.kelvin = data.main.temp_min;
 
-                    self.weather.wind.direction = self.convertDegreeToDirection(data.wind.deg);
-                    self.weather.wind.speed = data.wind.speed;
+                        self.weather.wind.direction = self.convertDegreeToDirection(data.wind.deg);
+                        self.weather.wind.speed = data.wind.speed;
 
-                    if(data.sys.country) {
-                        self.weather.location = data.name + ", " + data.sys.country;
+                        if(data.sys.country) {
+                            self.weather.location = data.name + ", " + data.sys.country;
+                        } else {
+                            self.weather.location = data.name;
+                        }
+
+                        self.getFutureWeather();
+
+                        self.initialView = false;
+                        self.resultsView = true;
                     } else {
-                        self.weather.location = data.name;
+                        self.errorMessage = "Error: " + data.message + ".";
                     }
-
-                    self.getFutureWeather();
-
-                    self.initialView = false;
-                    self.resultsView = true;
+                }).fail(function(data) {
+                    self.errorMessage = "An unknown error has occured. Please try again later.";
                 });
             },
             getWeatherIcon: function(data) {

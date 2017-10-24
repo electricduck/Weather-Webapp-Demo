@@ -15,6 +15,15 @@
         <div class="view-sidebar">
         </div>
         <div class="view-main view-main-sm">
+            <div class="sm error" v-if="errorMessage">
+                <strong>{{ errorMessage }}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+        </div>
+        <div class="view-main view-main-sm">
             <div class="sm">
                 Enter a location of your choosing (<strong>city name</strong> or <strong>post/zip code</strong>) and hit <strong>Enter</strong>, to recieve current and future weather information, provided by <a href="https://openweathermap.com">OpenWeatherMap</a>.
             </div>

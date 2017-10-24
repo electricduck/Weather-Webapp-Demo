@@ -25,12 +25,9 @@ namespace Weather_Webapp_Demo.Services
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 HttpResponseMessage response = await client.GetAsync("?appid=" + appKey + "&" + query);
-                if(response.IsSuccessStatusCode) {
-                    var result = await response.Content.ReadAsStringAsync();
-                    return result;
-                } else {
-                    return null;
-                }
+                
+                var result = await response.Content.ReadAsStringAsync();
+                return result;
             }
         }
     }
