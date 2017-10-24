@@ -14,6 +14,7 @@
                 day3: [],
                 day4: []
             },
+            unit: "C",
             weather: {
                 cloudCover: 0,
                 desc: null,
@@ -119,15 +120,15 @@
 
                         self.weather.temp.actual.celcius = self.convertKelvinToCelcius(data.main.temp);
                         self.weather.temp.actual.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp);
-                        self.weather.temp.actual.kelvin = data.main.temp;
+                        self.weather.temp.actual.kelvin = data.main.temp.toFixed(1);
 
                         self.weather.temp.high.celcius = self.convertKelvinToCelcius(data.main.temp_max);
                         self.weather.temp.high.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp_min);
-                        self.weather.temp.high.kelvin = data.main.temp_max;
+                        self.weather.temp.high.kelvin = data.main.temp_max.toFixed(1);
 
                         self.weather.temp.low.celcius = self.convertKelvinToCelcius(data.main.temp_min);
                         self.weather.temp.low.fahrenheit = self.convertKelvinToFahrenheit(data.main.temp_min);
-                        self.weather.temp.low.kelvin = data.main.temp_min;
+                        self.weather.temp.low.kelvin = data.main.temp_min.toFixed(1);
 
                         self.weather.wind.direction = self.convertDegreeToDirection(data.wind.deg);
                         self.weather.wind.speed = data.wind.speed;
@@ -163,6 +164,9 @@
                 this.resultsView = false;
 
                 history.pushState(null, "Weather", "/");
+            },
+            setUnit: function(unit) {
+                this.unit = unit;
             }
         },
         mounted: function() {

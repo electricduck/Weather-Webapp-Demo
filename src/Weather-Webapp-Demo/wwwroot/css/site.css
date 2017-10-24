@@ -37,7 +37,7 @@ a {
 .view {
     display: table;
     width: 100%;
-    margin: 40px 0;
+    margin: 100px 0;
 }
 
 .view-inner {
@@ -217,7 +217,7 @@ a {
         vertical-align: middle;
         text-align: center;
         padding-right: 10px;
-        min-width: 100px;
+        min-width: 75px;
     }
 
         #results-view .weather-future td:nth-of-type(1) {
@@ -227,3 +227,47 @@ a {
             min-width: 75px;
             text-align: left;
         }
+
+        #results-view .weather-future td .weather-future-icon {
+            display: block;
+            font-size: 30px;
+            line-height: 30px;
+            margin: 5px;
+        }
+
+.unit-float {
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-align: right;
+}
+
+    .unit-float ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+        background-color: #222222;
+        color: #CCCCCC;
+        border: 2px #AAAAAA solid;
+        display: inline-block;
+    }
+
+        .unit-float ul li {
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+            font-family: sans-serif;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 16px;
+            padding: 3px 5px;
+            cursor: pointer;
+        }
+
+            .unit-float ul li.selected {
+                background-color: #15B800;
+                color: #222222;
+                font-weight: 700;
+            }
