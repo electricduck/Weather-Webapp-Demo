@@ -1,0 +1,154 @@
+<div class="unit-float">
+    <ul>
+        <li v-bind:class="{ selected: unit === 'C' }" v-on:click="setUnit('C')">&deg;C</li>
+        <li v-bind:class="{ selected: unit === 'F' }" v-on:click="setUnit('F')">&deg;F</li>
+        <li v-bind:class="{ selected: unit === 'K' }" v-on:click="setUnit('K')">&deg;K</li>
+    </ul>
+</div>
+
+<div class="view" id="results-view" v-if="resultsView">
+    <div class="view-inner">
+        <div class="view-sidebar">
+            <div class="icon icon-lg"><i class="weather-icon wi wi-fw" v-bind:class="weather.icon"></i></div>
+        </div>
+        <div class="view-main view-weather">
+            <div class="weather">
+                <p class="temperature">
+                    <span v-if="unit === 'C'">{{ weather.temp.actual.celcius }}</span>
+                    <span v-if="unit === 'F'">{{ weather.temp.actual.fahrenheit }}</span>
+                    <span v-if="unit === 'K'">{{ weather.temp.actual.kelvin }}</span>
+                    <span class="unit">&deg;{{ unit }}</span>
+                </p>
+                <p class="type">{{ weather.type }}</p>
+                <p class="desc">{{ weather.desc }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+            <div class="icon"><i class="fa fa-fw fa-map-marker"></i></div>
+        </div>
+        <div class="view-main">
+            <div class="md">
+                {{ weather.location }}
+            </div>
+            <div class="xs">
+                <a href="/" v-on:click.prevent="resetUi">Incorrect location?</a>
+            </div>
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+            <div class="icon"><i class="fa fa-fw fa-calendar"></i></div>
+        </div>
+        <div class="view-main">
+            <div class="weather-future-container sm">
+                <table class="weather-future" v-for="day in forecast">
+                    <tr>
+                        <td>{{ convertUnixTimestampToShorthandDate(day[0].dt) }}</td>
+                        <td v-for="hour in day">{{ convertUnixTimestampToTime(hour.dt, true) }}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td v-for="hour in day">
+                            <span class="weather-future-icon"><i class="wi wi-fw" v-bind:class="getWeatherIcon(hour.weather[0])"></i></span>
+                            <span v-if="unit === 'C'">{{ convertKelvinToCelcius(hour.main.temp) }}</span>
+                            <span v-if="unit === 'F'">{{ convertKelvinToFahrenheit(hour.main.temp) }}</span>
+                            <span v-if="unit === 'K'">{{ hour.main.temp.toFixed(1) }}</span>
+                            &deg;{{ unit }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+            <div class="icon"><i class="fa fa-fw fa-thermometer-half"></i></div>
+        </div>
+        <div class="view-main">
+            <div class="sm">
+                <table class="weather-details">
+                    <tr>
+                        <td>High Temp.</td>
+                        <td>
+                            <span v-if="unit === 'C'">{{ weather.temp.high.celcius }}</span>
+                            <span v-if="unit === 'F'">{{ weather.temp.high.fahrenheit }}</span>
+                            <span v-if="unit === 'K'">{{ weather.temp.high.kelvin }}</span>
+                            &deg;{{ unit }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Low Temp.</td>
+                        <td>
+                            <span v-if="unit === 'C'">{{ weather.temp.low.celcius }}</span>
+                            <span v-if="unit === 'F'">{{ weather.temp.low.fahrenheit }}</span>
+                            <span v-if="unit === 'K'">{{ weather.temp.low.kelvin }}</span>
+                            &deg;{{ unit }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+            <div class="icon"><i class="fa fa-fw fa-cloud"></i></div>
+        </div>
+        <div class="view-main">
+            <div class="sm">
+                <table class="weather-details">
+                    <tr>
+                        <td>Visibility</td>
+                        <td>{{ weather.visibility }} M</td>
+                    </tr>
+                    <tr>
+                        <td>Wind</td>
+                        <td>{{ weather.wind.speed }} m/s ({{ weather.wind.direction }})</td>
+                    </tr>
+                    <tr>
+                        <td>Humidity</td>
+                        <td>{{ weather.humidity }} %</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud Cover</td>
+                        <td>{{ weather.cloudCover }} %</td>
+                    </tr>
+                    <tr>
+                        <td>Pressure</td>
+                        <td>{{ weather.pressure }} hPa</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+            <div class="icon"><i class="fa fa-fw fa-sun-o"></i></div>
+        </div>
+        <div class="view-main">
+            <div class="sm">
+                <table class="weather-details">
+                    <tr>
+                        <td>Sunrise</td>
+                        <td>{{ weather.sun.rise}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sunset</td>
+                        <td>{{ weather.sun.set }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+            <div class="icon"><i class="fa fa-fw fa-info"></i></div>
+        </div>
+        <div class="view-main">
+            <div class="sm">
+                Last updated at <strong>{{ weather.update }}</strong>.<br />Data provided by <a href="http://openweathermap.org">OpenWeatherMap</a>.
+            </div>
+        </div>
+    </div>
+</div>

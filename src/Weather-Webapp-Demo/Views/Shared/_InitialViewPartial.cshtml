@@ -1,0 +1,28 @@
+<div class="view" id="initial-view" v-if="initialView">
+    <div class="view-inner">
+        <div class="view-sidebar">
+            <h1>Weather For</h1>
+        </div>
+        <div class="view-main">
+            <input id="location-input" type="text" placeholder="..." v-model="requestedLocation" v-on:keyup.enter="getWeather" />
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+        </div>
+        <div class="view-main view-main-sm">
+            <div class="sm error" v-if="errorMessage">
+                <strong>{{ errorMessage }}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="view-inner">
+        <div class="view-sidebar">
+        </div>
+        <div class="view-main view-main-sm">
+            <div class="sm">
+                Enter a location of your choosing (<strong>city name</strong> or <strong>post/zip code</strong>) and hit <strong>Enter</strong>, to recieve current and future weather information, provided by <a href="https://openweathermap.com">OpenWeatherMap</a>.
+            </div>
+        </div>
+    </div>
+</div>
